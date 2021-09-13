@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Codecool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Review - CC Shop</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+</head>
+
+<body>
+
+<div class="px-4 px-lg-0">
+
+    <div class="pb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
+
+                    <!-- Shopping cart table -->
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="p-2 px-3 text-uppercase">Product</div>
+                                </th>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-uppercase">Unit Price</div>
+                                </th>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-uppercase">Price</div>
+                                </th>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-uppercase">Quantity</div>
+                                </th>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-uppercase">Increase</div>
+                                </th>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-uppercase">Decrease</div>
+                                </th>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-uppercase">Remove</div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="line,iterStat : ${order}">
+                                <th scope="row" class="border-0">
+                                    <div class="p-2">
+                                        <img th:attr="src='/static/img/product_' + ${line.getProduct().getId()} + '.jpg'" alt="" width="70" class="img-fluid rounded shadow-sm">
+                                        <div class="ml-3 d-inline-block align-middle">
+                                            <h5 class="mb-0" th:text="${line.getProduct().getName()}">Name</h5><span class="text-muted font-weight-normal font-italic d-block" th:text="${line.getProduct().getProductCategory().getName()}">Category</span>
+                                        </div>
+                                    </div>
+                                </th>
+                                <td class="border-0 align-middle">$ <strong th:text="${line.getProduct().getDefaultPrice()}">Price</strong></td>
+                                <td class="border-0 align-middle">$ <strong th:text="${#numbers.formatDecimal(line.getTotalPrice(), 0, 1)}">Price</strong></td>
+                                <td class="border-0 align-middle">
+                                    <form method="post">
+                                        <input type="hidden" name="line-item-id" th:value="${line.getProduct().getId()}">
+                                        <input type="number" style="width: 50px" min="0" name="edit" th:value="${line.getQuantity()}">
+                                    </form>
+                                </td>
+                                <td class="border-0 align-middle">
+                                    <form method="post">
+                                    <input type="hidden" name="line-item-id" th:value="${line.getProduct().getId()}">
+                                    <button type="submit" name="edit" value="increase">
+                                        <i class="fa fa-arrow-circle-up"></i>
+                                    </button>
+                                    </form>
+                                </td>
+                                <td class="border-0 align-middle">
+                                    <form method="post">
+                                    <input type="hidden" name="line-item-id" th:value="${line.getProduct().getId()}">
+                                    <button type="submit" name="edit" value="decrease">
+                                        <i class="fa fa-arrow-circle-down"></i>
+                                    </button>
+                                    </form>
+                                </td>
+                                <td class="border-0 align-middle">
+                                    <form method="post">
+                                    <input type="hidden" name="line-item-id" th:value="${line.getProduct().getId()}">
+                                    <button type="submit" name="edit" value="clear">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- End -->
+                </div>
+            </div>
+
+            <p class="font-italic mb-4">Forgot something? Continue <a href="/">shopping</a></p>
+
+            <div class="row py-5 p-4 bg-white rounded shadow-sm">
+                <div class="col-lg-6">
+                    <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order summary </div>
+                    <div class="p-4">
+                        <ul class="list-unstyled mb-4">
+                            <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal </strong><strong>Total</strong></li>
+                            <li class="d-flex justify-content-between py-3 border-bottom"><strong th:text="${ordertotal.totalCartQuantity()} + ' Products'"></strong> <strong th:text="${#numbers.formatDecimal(ordertotal.totalCartPrice(), 0, 1)} + ' USD'"></strong></li>
+                        </ul><a href="/checkout" class="btn btn-dark py-2 btn-block">Proceed to checkout</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>

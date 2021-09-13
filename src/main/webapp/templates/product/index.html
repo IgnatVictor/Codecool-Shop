@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Codecool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>CC Shop - products</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/title.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="/static/js/CategoryFilter.js" defer></script>
+</head>
+
+<body>
+
+<div class="wrapper1">
+    <p class="popout">
+        <span>C</span>
+        <span>O</span>
+        <span>D</span>
+        <span>E</span>
+        <span>C</span>
+        <span>O</span>
+        <span>O</span>
+        <span>L</span><br>
+        <span>S</span>
+        <span>H</span>
+        <span>O</span>
+        <span>P</span>
+
+    </p>
+</div>
+<br>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="d-flex">
+        <div class="p-2 dropdown">
+            <button onclick="CategoriesDropdown()" class="dropbtn">Category</button>
+            <div id="CategoriesDropdown" class="dropdown-content">
+                <div th:each="cat,iterStart:${categories}">
+                    <a th:href="@{'/?category=' + ${cat.name}}" th:text="${cat.name}"></a>
+                </div>
+            </div>
+        </div>
+        <div class="p-2 dropdown">
+            <button onclick="SuppliersDropdown()" class="dropbtn">Supplier</button>
+            <div id="SuppliersDropdown" class="dropdown-content">
+                <div th:each="sup,iterStart:${suppliers}">
+                    <a th:href="@{'/?supplier=' + ${sup.name}}" th:text="${sup.name}"></a>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-item">
+            <a href="/review-cart" id="cart"> Cart <span class="badge" th:text="${cart}"></span></a>
+        </div>
+        <div class="navbar-item">
+            <a href="/register" id="sign-up"> Sign up </a>
+        </div>
+    </div>
+</nav>
+
+<div id="products" class="row" style="margin-left: 250px">
+    <div class="" th:each="prod,iterStat : ${products}">
+        <div class="card">
+            <div class="image-container">
+                <img class="imagess" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+            </div>
+            <div class="card-header">
+                <h4 class="card-title" th:text="${prod.name}">Product name</h4>
+                <p class="card-text" th:text="${prod.description}">Product description... </p>
+            </div>
+            <div class="card-body">
+                <div class="card-text">
+                    <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                </div>
+                <form method="post">
+                    <div class="card-text">
+                        <input type="hidden" name="productId" th:value="${prod.id}">
+                        <input class="btn btn-success" type="submit" value="Add to cart">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

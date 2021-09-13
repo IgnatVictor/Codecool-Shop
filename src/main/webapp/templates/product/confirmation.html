@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Codecool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Codecool Shop</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' > </script>
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js' > </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css' > </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js' > </script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+    <link rel="stylesheet" type="text/css" href="/static/css/payment.css" />
+    <script  src="/static/js/payment.js" defer></script>
+    <title>Payment </title>
+<body>
+<form method="post">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-11">
+                <div class="card card0 rounded-0">
+                    <div class="row">
+                        <div class="col-md-5 d-md-block d-none p-0 box">
+                            <div class="card rounded-0 border-0 card1" id="bill">
+                                <h2> Thank you for your order!</h2>
+                                <h5 class="text-danger">We confirm successful payment for the following items </h5>
+                                <div class="row" th:each="line,iterStat : ${order}">
+                                    <div class="col-lg-6  mt-4 line pl-4">
+                                        <h2 class="bill-head" th:text="${line.getProduct().getName()}"></h2>
+                                    </div>
+                                    <div class="col-lg-3 mt-4 ">
+                                        <h2 class="bill-head " th:text="${line.getQuantity()}+ ' Items'"></h2>
+                                    </div>
+                                    <div class="col-lg-3  mt-4 ">
+                                        <h2 class="bill-head " th:text="${#numbers.formatDecimal(line.getTotalPrice(), 0, 1)}+ ' USD'"></h2>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 red-bg">
+                                        <p class="bill-date" id="total-label">Total Price Paid</p>
+                                        <h2 class="bill-head" id="total" th:text="${#numbers.formatDecimal(totalprice, 0, 1)}+ ' $'"></h2> <small class="bill-date" id="total-label">Price includes all taxes</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-7 col-sm-12 p-0 box">
+                            <div class="card rounded-0 border-0 card2">
+                                <div class="form-card">
+                                    <h3 id="heading3" class="text-danger">Your shipping details</h3>
+                                    <div class="row">
+                                        <div class="col-lg-9  mt-2">
+                                            <h2 class="bill-head" th:text="'Name: ' + ${shippingDetails.get('name')}"></h2>
+                                        </div>
+                                        <div class="col-lg-9 mt-2 ">
+                                            <h2 class="bill-head " th:text="'Email: ' + ${shippingDetails.get('email')}"></h2>
+                                        </div>
+                                        <div class="col-lg-9  mt-2 ">
+                                            <h2 class="bill-head " th:text="'Address: ' + ${shippingDetails.get('shipping-address-address')} + ', ' + ${shippingDetails.get('shipping-address-city')}"></h2>
+                                        </div>
+                                        <div class="col-lg-9  mt-2 ">
+                                            <h2 class="bill-head " th:text="'Country: ' + ${shippingDetails.get('shipping-address-country')}"></h2>
+                                        </div>
+                                        <div class="col-lg-9  mt-2 ">
+                                            <h2 class="bill-head " th:text="'Zip code: ' +${shippingDetails.get('shipping-address-zipcode')}"></h2>
+                                        </div>
+                                        <div class="col-lg-9  mt-2 ">
+                                            <br>
+                                            <h6 id="heading4" class="text-danger">Our system has sent an automatic confirmation email to your address</h6>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!--wrapper end-->
+</body>
+</html>
