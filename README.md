@@ -1,4 +1,5 @@
 # Codecool shop (sprint 2)
+![shop2](https://user-images.githubusercontent.com/70142353/137591099-aeaaf66c-234d-4166-b08f-76ec539f3891.jpg)
 
 ## Story
 
